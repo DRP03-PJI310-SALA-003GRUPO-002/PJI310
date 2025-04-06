@@ -4,10 +4,10 @@ import mysql.connector as mysqli
 def conectar_bd():
     try:
         conexao = mysqli.connector.connect(
-            host="localhost",     # Altere para o host do seu banco
-            user="seu_usuario",   # Altere para seu usuário
-            password="sua_senha", # Altere para sua senha
-            database="seu_banco"  # Altere para seu banco
+            host="localhost",
+            user="root",
+            password="p@55.0rd",
+            database="db_PI"
         )
         return conexao
     except mysqli.connector.Error as erro:
