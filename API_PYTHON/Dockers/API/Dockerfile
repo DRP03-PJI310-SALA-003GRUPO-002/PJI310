@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /app
 
 # Copia o script de inicialização do MySQL
-COPY hello.py /app
+COPY ./app/* /app
 
 # porta http para uso API
 #EXPOSE 33306

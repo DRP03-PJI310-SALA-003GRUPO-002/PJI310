@@ -15,6 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:p@55.0rd@localhost
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 #app.config["SECRET_KEY"] = "sua_chave_secreta"
 
+db = SQLAlchemy(app)
 
 # Rota de login e geração de token JWT
 @app.route("/login", methods=["POST"])

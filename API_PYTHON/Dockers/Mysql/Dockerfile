@@ -1,10 +1,11 @@
 # Usa a imagem oficial do Debian como base
 FROM debian:bullseye
 
-# Define variáveis de ambiente para evitar interações durante a instalação
+# Define variáveis de ambiente 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV MYSQL_ROOT_PASSWORD=p@55.0rd
 
-# Atualiza os pacotes e instala MySQL Server e Bash
+# instala MySQL Server e Bash
 RUN apt-get update && apt-get install -y \
     mariadb-server \
     bash \
