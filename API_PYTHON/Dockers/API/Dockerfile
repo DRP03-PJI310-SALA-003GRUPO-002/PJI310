@@ -1,5 +1,5 @@
-# Usa a imagem oficial do Debian como base
-FROM debian:bullseye
+# Usa a imagem oficial do Debian 12
+FROM debian:bookworm 
 
 # Define variáveis de ambiente para evitar interações durante a instalação
 ENV DEBIAN_FRONTEND=noninteractive
