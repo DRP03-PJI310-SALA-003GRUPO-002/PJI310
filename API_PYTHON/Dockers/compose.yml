@@ -1,27 +1,31 @@
 services:
   web:
-    build: ./API/
+    build: ./API
     ports:
-      - "5000"
+      - "5000:5000"
     volumes:
       - ./API/app:/opt/app
     networks:
       - pi_network
 
   mysql_app:
-    build: ./Mysql/
+    image: mariadb:latest
     ports:
-      - "3306"
-    enviroment:
+      - "3306:3306"
+    environment:
       MYSQL_ROOT_PASSWORD: p@55.0rd
       MYSQL_DATABASE: db_PI
       MYSQL_USER: pIuser
       MYSQL_PASSWORD: pI123()
     volumes:
-      - .:data
+      - mysql_data:/var/lib/mysql
     networks:
       - pi_network
-      
+
+
 networks:
   pi_network:
     driver: bridge
+
+volumes:
+  mysql_data:
