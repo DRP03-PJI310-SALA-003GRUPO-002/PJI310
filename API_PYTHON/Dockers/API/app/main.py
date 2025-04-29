@@ -11,13 +11,13 @@ from Model.Usuario import User
 app = Flask(__name__)
 
 # Configurações do MySQL
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:p@55.0rd@localhost/db_PI"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://pIuser:pI123()@localhost/db_PI"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 #app.config["SECRET_KEY"] = "sua_chave_secreta"
 
 db = SQLAlchemy(app)
 
-# Rota de login e geração de token JWT
+# Rota de login
 @app.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -61,8 +61,6 @@ def token_required(f):
 
         return f(current_user, *args, **kwargs)
     return decorated
-
-
 
 # Rota de registro
 @app.route("/register", methods=["POST"])

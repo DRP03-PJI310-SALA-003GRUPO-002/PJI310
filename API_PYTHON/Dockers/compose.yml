@@ -1,0 +1,27 @@
+services:
+  web:
+    build: ./API/
+    ports:
+      - "5000"
+    volumes:
+      - ./API/app:/opt/app
+    networks:
+      - pi_network
+
+  mysql_app:
+    build: ./Mysql/
+    ports:
+      - "3306"
+    enviroment:
+      MYSQL_ROOT_PASSWORD: p@55.0rd
+      MYSQL_DATABASE: db_PI
+      MYSQL_USER: pIuser
+      MYSQL_PASSWORD: pI123()
+    volumes:
+      - .:data
+    networks:
+      - pi_network
+      
+networks:
+  pi_network:
+    driver: bridge

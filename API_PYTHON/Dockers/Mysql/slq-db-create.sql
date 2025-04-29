@@ -4,7 +4,7 @@ CREATE DATABASE Pi3;
 -- Usar o banco de dados
 USE Pi3;
 
--- Cria as tabelas
+-- INICIO TABELAS
 CREATE TABLE login (
     cpf VARCHAR(11) NOT NULL,
     nome VARCHAR(100) NOT NULL,
@@ -22,4 +22,3 @@ CREATE TABLE ponto (
     data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (cpf) REFERENCES login(cpf) ON DELETE CASCADE
 );
-
