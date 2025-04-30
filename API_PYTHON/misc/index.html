@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresa</title>
+
+    <style>
+        .row {
+            margin: 5px;
+        }
+        label {
+            width: 100px;
+            text-align: right;
+            display: inline-block;
+            padding-right: 5px;
+        }
+        fieldset{
+            margin: 15px 0;
+            border-radius: 10px;
+            border-color: lightgray;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Empresa</h1>
+    <form id="formFuncionario" method="post">
+        <fieldset>
+            <legend>Dados do Funcionário</legend>
+            <div class="row">
+                <label>CPF:</label>
+                <input type="text" name="cpf" required />
+            </div>
+            <div class="row">
+                <label>Senha:</label>
+                <input type="password" name="senha" required />
+            </div>
+        </fieldset>
+        <div class="row">
+            <button type="reset">Limpar</button>
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById("formFuncionario").addEventListener("submit", async function(e) {
+            e.preventDefault(); // Evita o envio tradicional
+
+            const formData = new FormData(this);
+            const dados = Object.fromEntries(formData.entries());
+
+            try {
+                const resposta = await fetch("http://localhost:5000/api/funcionario", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                const resultado = await resposta.json();
+                alert("Resposta da API: " + resultado.mensagem);
+            } catch (erro) {
+                alert("Erro ao enviar: " + erro);
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
