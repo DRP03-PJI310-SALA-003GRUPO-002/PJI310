@@ -1,12 +1,14 @@
 services:
   web:
-    build: ./API
+    build:
+      context: ./  # Aqui, ajustamos para o diretório raiz de 'API_PYTHON'
     ports:
       - "5000:5000"
     volumes:
       - ./API/app:/opt/app
     networks:
       - pi_network
+    command: tail -f /dev/null
 
   mysql_app:
     image: mariadb:latest
