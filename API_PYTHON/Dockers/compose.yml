@@ -1,33 +1,33 @@
+version: '3.8'
+
 services:
   web:
     build:
-      context: ./  # Aqui, ajustamos para o diretório raiz de 'API_PYTHON'
+      context: ./API/
+      dockerfile: Dockerfile  # Nome do Dockerfile da aplicação Flask
+    container_name: flask_app
     ports:
       - "5000:5000"
-    volumes:
-      - ./API/app:/opt/app
     networks:
       - pi_network
-    command: tail -f /dev/null
+    depends_on:
+      - db
 
-  mysql_app:
-    image: mariadb:latest
+  db:
+    build:
+      context: ./Mysql/
+      dockerfile: Dockerfile  # Nome do Dockerfile do MariaDB
+    container_name: mariadb_container
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: p@55.0rd
-      MYSQL_DATABASE: db_PI
-      MYSQL_USER: pIuser
-      MYSQL_PASSWORD: pI123()
-    volumes:
-      - mysql_data:/var/lib/mysql
     networks:
       - pi_network
-
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: meubanco
+      MARIADB_USER: meuusuario
+      MARIADB_PASSWORD: senhadousuario
 
 networks:
   pi_network:
     driver: bridge
-
-volumes:
-  mysql_data:

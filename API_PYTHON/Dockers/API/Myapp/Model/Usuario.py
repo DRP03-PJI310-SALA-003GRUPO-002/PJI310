@@ -1,4 +1,4 @@
-from app.main import db
+from API_PYTHON.Dockers.API.Myapp.app import db
 
 class User(db.Model):
     __tablename__ = "user"
