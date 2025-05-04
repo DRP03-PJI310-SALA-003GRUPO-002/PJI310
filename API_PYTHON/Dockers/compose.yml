@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     build:
-      context: .
+      context: ./mariadb/
       dockerfile: Dockerfile  # Nome do Dockerfile do MariaDB
     container_name: mariadb_container
     ports:
@@ -15,6 +15,17 @@ services:
       MARIADB_DATABASE: db_PI
       MARIADB_USER: pIuser
       MARIADB_PASSWORD: pI123
+
+  web:
+    build:
+      context: ./web/
+      dockerfile: Dockerfile 
+    container_name: web-teste
+    ports:
+      - "80:80"
+    networks:
+      - pi_network
+      
 networks:
   pi_network:
     driver: bridge
