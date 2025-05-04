@@ -1,21 +1,9 @@
 version: '3.8'
 
 services:
-  web:
-    build:
-      context: ./API/
-      dockerfile: Dockerfile  # Nome do Dockerfile da aplicação Flask
-    container_name: flask_app
-    ports:
-      - "5000:5000"
-    networks:
-      - pi_network
-    depends_on:
-      - db
-
   db:
     build:
-      context: ./Mysql/
+      context: .
       dockerfile: Dockerfile  # Nome do Dockerfile do MariaDB
     container_name: mariadb_container
     ports:
@@ -23,11 +11,10 @@ services:
     networks:
       - pi_network
     environment:
-      MARIADB_ROOT_PASSWORD: rootpass
-      MARIADB_DATABASE: meubanco
-      MARIADB_USER: meuusuario
-      MARIADB_PASSWORD: senhadousuario
-
+      MARIADB_ROOT_PASSWORD: p@55w.rd
+      MARIADB_DATABASE: db_PI
+      MARIADB_USER: pIuser
+      MARIADB_PASSWORD: pI123
 networks:
   pi_network:
     driver: bridge

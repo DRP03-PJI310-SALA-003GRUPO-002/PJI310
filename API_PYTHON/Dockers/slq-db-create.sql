@@ -1,8 +1,8 @@
 -- Criar o banco de dados
-CREATE DATABASE Pi3;
+CREATE DATABASE IF NOT EXISTS db_PI;
 
 -- Usar o banco de dados
-USE Pi3;
+USE db_PI;
 
 -- INICIO TABELAS
 CREATE TABLE login (
