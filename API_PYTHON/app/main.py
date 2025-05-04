@@ -2,17 +2,27 @@ from flask import Flask, request, jsonify, make_response
 from itsdangerous import URLSafeTimedSerializer
 import pymysql
 
+from flask_cors import CORS
+
+
+
 app = Flask(__name__)
 app.secret_key = 'chave-secreta-supersegura'  # use uma real no ambiente de produção
 
 serializer = URLSafeTimedSerializer(app.secret_key)
 
 db_config = {
-    "host": "db",
+    "host": "localhost",
     "user": "pIuser",
     "password": "pI123",
     "database": "db_PI"
 }
+
+CORS(app, supports_credentials=True)
+
+@app.route('/', methods=['GET'])
+def teste():
+    return jsonify({"validado":"valido"}), 200
 
 # Rota de login
 @app.route('/login', methods=['POST'])
@@ -60,3 +70,6 @@ def dados_protegidos():
         return jsonify({"erro": "Não autorizado"}), 401
 
     return jsonify({"mensagem": f"Bem-vindo, {usuario}. Aqui estão seus dados protegidos."})
+
+
+app.run(host='0.0.0.0', debug=True)

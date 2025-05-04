@@ -22,3 +22,11 @@ CREATE TABLE ponto (
     data_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (cpf) REFERENCES login(cpf) ON DELETE CASCADE
 );
+
+-- Inserir usuários apenas se ainda não existirem
+INSERT IGNORE INTO login (cpf, nome, senha, cargo) VALUES
+('12345678901', 'joao', '123456', 'ti'),
+('23456789012', 'maria', 'senha123', 'ti'),
+('34567890123', 'carlos', 'abc123', 'gerente_ti'),
+('45678901234', 'ana', 'qwerty', 'gerente_ti'),
+('56789012345', 'paulo', '123abc', 'rh');
