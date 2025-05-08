@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, make_response
-from itsdangerous import URLSafeTimedSerializer
+#from itsdangerous import URLSafeTimedSerializer
 from Auth.auth import auth_encode, auth_decode
 import pymysql
 
@@ -11,7 +11,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 app.secret_key = 'chave-secreta-supersegura'  # use uma real no ambiente de produção
 
-serializer = URLSafeTimedSerializer(app.secret_key)
+#serializer = URLSafeTimedSerializer(app.secret_key)
 
 db_config = {
     "host": "localhost",
