@@ -37,6 +37,22 @@ CORS(app, supports_credentials=True)
 #             return jsonify({"message":{"cpf": cpf,"nome":usuario,"timestamp":timestamp_app}})
 #     except Exception as e:
 #         return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
+# @app.route('/inserir_ponto', methods=['POST'])
+
+@app.route('/inserir_ponto', methods=['POST'])
+def teste():
+    try:
+        data = request.json
+        timestamp_app = data.get('timestamp')
+        connection = pymysql.connect(**db_config)
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT cpf FROM login WHERE nome = %s", (usuario,))
+            cpf = cursor.fetchone()
+            cursor.execute("INSERT INTO ponto (cpf, nome, data_hora) VALUES (%s,%s,%s)", (cpf,usuario,timestamp_app))
+            connection.commit()
+            return jsonify({"message":{"cpf": cpf,"nome":usuario,"timestamp":timestamp_app}})
+    except Exception as e:
+        return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
 
 # Rota de login
 @app.route('/login', methods=['POST'])
