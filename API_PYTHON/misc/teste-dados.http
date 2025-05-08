@@ -1,3 +1,6 @@
-
 GET http://localhost:5000/dados
-Cookie: auth_token=ImpvYW8i.aBgZrA.YFquojE5-vDBiF0UjMEnYhUdSmQ
+Content-Type: application/json
+
+{
+  "Authenticator": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lIjoiam9hbyIsImNwZiI6IjEyMzQ1Njc4OTAxIiwiY2FyZ28iOiJ0aSJ9.aCmav21DVEXX8eEaxPT6ZObFpfVzYQCyvvjhTRYffh4"
+}
