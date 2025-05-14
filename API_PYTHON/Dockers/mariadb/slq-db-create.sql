@@ -1,3 +1,4 @@
+DROP DATABASE db_PI;
 -- Criar o banco de dados
 CREATE DATABASE IF NOT EXISTS db_PI;
 
