@@ -1,17 +1,15 @@
 import jwt
 import datetime 
 from jwt import ExpiredSignatureError, InvalidTokenError
-# def auth_encode(usuario,cpf,cargo):
-#     token = jwt.encode({
-#         "nome":usuario,
-#         "cpf":cpf,
-#         "cargo":cargo
-#         },key="123456789",algorithm="HS256")
-#     return token
+import pytz
+
+
+timezone_sp = pytz.timezone('America/Sao_Paulo')
+
 def auth_encode(dados,exp_time=30):
-    tempo_expiracao = datetime.now() + datetime.timedelta(minutes=exp_time)
+    tempo_expiracao = datetime.datetime.now(timezone_sp) + datetime.timedelta(minutes=exp_time)
     token = jwt.encode({
-        "nome": dados["usuario"],
+        "usuario": dados["usuario"],
         "cpf": dados["cpf"],
         "cargo": dados["cargo"],
         "exp":tempo_expiracao

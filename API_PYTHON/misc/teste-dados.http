@@ -2,5 +2,5 @@ GET http://localhost:5000/dados
 Content-Type: application/json
 
 {
-  "Authenticator": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lIjoiam9hbyIsImNwZiI6IjEyMzQ1Njc4OTAxIiwiY2FyZ28iOiJ0aSJ9.aCmav21DVEXX8eEaxPT6ZObFpfVzYQCyvvjhTRYffh4"
+  "Authenticator":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21lIjoiam9hbyIsImNwZiI6IjEyMzQ1Njc4OTAxIiwiY2FyZ28iOiJ0aSIsImV4cCI6MTc0NzE5MTE4MH0.33ojkxdNeELUNlai-l96f-e-ElOVDd_QuxHdn2aWOrY"
 }
