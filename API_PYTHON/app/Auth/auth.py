@@ -16,16 +16,6 @@ def auth_encode(dados,exp_time=30):
     }, key="123456789", algorithm="HS256")
     return token
 
-# Gera refresh token (longa duração)
-def refresh_token_encode(dados, exp_days=7):
-    tempo_expiracao = datetime.datetime.now() + datetime.timedelta(days=exp_days)
-    token = jwt.encode({
-        "cpf": dados["cpf"],  # Apenas identificador essencial
-        "exp": tempo_expiracao
-    }, key="123456789", algorithm="HS256")
-    return token
-
-
 def auth_decode(token):
     try:
         userdados = jwt.decode(token,key="123456789",algorithms="HS256")
@@ -35,8 +25,16 @@ def auth_decode(token):
     except InvalidTokenError:
         return {"erro": "Token inválido"}
 
+# Gera refresh token (longa duração)
+def refresh_token_encode(dados, exp_days=7):
+    tempo_expiracao = datetime.datetime.now() + datetime.timedelta(days=exp_days)
+    token = jwt.encode({
+        "cpf": dados["cpf"],  # Apenas identificador essencial
+        "exp": tempo_expiracao
+    }, key="123456789", algorithm="HS256")
+    return token
 
-def gerar_novo_access_token(refresh_token):
+def renew_access_token(refresh_token):
     try:
         dados = jwt.decode(refresh_token, key="123456789", algorithms=["HS256"])
         # Normalmente você buscaria os dados completos do usuário a partir do CPF, mas aqui é simplificado

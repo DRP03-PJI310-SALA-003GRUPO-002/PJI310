@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 #from itsdangerous import URLSafeTimedSerializer
 from Auth.auth import auth_encode, auth_decode
+from Functions.intervalo import obter_intervalo
 import pymysql
 
 from flask_cors import CORS
@@ -87,11 +88,30 @@ def validar_ponto():
     token_auth = data.get("Authenticator")
     id_ponto = data.get("id")
     dados_usuario = auth_decode(token_auth)
-    connection = pymysql.connect(**db_config)
-    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-        cursor.execute("UPDATE ponto SET validado=1 WHERE id=%s;", id_ponto)
-        connection.commit()
+    try:
+        connection = pymysql.connect(**db_config)
+        with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+            cursor.execute("UPDATE ponto SET validado=1 WHERE id=%s;", id_ponto)
+            connection.commit()
+    except Exception as e:
+        return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
     return {"success":"Ponto inserido com sucesso"}
 
+@app.route("/get_pontos_by_month", methods=['POST'])
+def get_pontos_by_month():
+    data = request.json
+    token_auth = data.get('Authenticator')
+    mes = data.get('month') 
+    ano = data.get('year') 
+    begin,end = obter_intervalo(mes, ano)
+    dados_usuario = auth_decode(token_auth)
+    try:
+        connection = pymysql.connect(**db_config)  
+        with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+            cursor.execute("SELECT * FROM ponto WHERE data_hora >= %s AND data_hora < %s",(begin,end))
+            result = cursor.fetchall()
+    except Exception as e:
+            return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
+    return jsonify(result)
 
 app.run(host='0.0.0.0', debug=True)
