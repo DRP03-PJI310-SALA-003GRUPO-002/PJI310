@@ -97,9 +97,9 @@ def validar_ponto():
         return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
     return {"success":"Ponto inserido com sucesso"}
 
-@app.route("/get_pontos_by_month", methods=['POST'])
-def get_pontos_by_month():
-    data = request.json
+@app.route("/teste", methods=['POST'])
+def teste():
+    data = request.json()
     token_auth = data.get('Authenticator')
     mes = data.get('month') 
     ano = data.get('year') 
@@ -108,7 +108,7 @@ def get_pontos_by_month():
     try:
         connection = pymysql.connect(**db_config)  
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-            cursor.execute("SELECT * FROM ponto WHERE data_hora >= %s AND data_hora < %s",(begin,end))
+            cursor.execute("SELECT * FROM ponto WHERE data_hora >= %s AND data_hora < %s",begin,end)
             result = cursor.fetchall()
     except Exception as e:
             return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
