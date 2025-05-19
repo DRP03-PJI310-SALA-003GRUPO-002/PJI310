@@ -60,25 +60,19 @@ def insert_ponto():
     except Exception as e:
         return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
 
-@app.route("/get_pontos", methods=['POST'])
-def get_pontos():
-    data = request.json
-    token_auth = data.get('Authenticator')
-    dados_usuario = auth_decode(token_auth)
-    connection = pymysql.connect(**db_config)
-    with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-        cursor.execute("SELECT * FROM ponto WHERE validado=0;")
-        result = cursor.fetchall()
-        return jsonify(result)
-
-@app.route("/get_ponto", methods=['POST'])
+@app.route("/get_user_ponto", methods=['POST'])
 def get_ponto():
     data = request.json
     token_auth = data.get('Authenticator')
     dados_usuario = auth_decode(token_auth)
+    
+    mes = data.get('month') 
+    ano = data.get('year') 
+    begin,end = obter_intervalo(mes, ano)
+    
     connection = pymysql.connect(**db_config)
     with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-        cursor.execute("SELECT * FROM ponto WHERE usuario=%s;",dados_usuario["usuario"])
+        cursor.execute("SELECT * FROM ponto WHERE usuario=%s AND data_hora >= %s AND data_hora < %s;",(dados_usuario["usuario"],begin,end))
         result = cursor.fetchall()
         return jsonify(result)
     
@@ -97,9 +91,9 @@ def validar_ponto():
         return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
     return {"success":"Ponto inserido com sucesso"}
 
-@app.route("/teste", methods=['POST'])
-def teste():
-    data = request.json()
+@app.route("/get_pontos_by_month", methods=['POST'])
+def get_pontos_by_month():
+    data = request.json
     token_auth = data.get('Authenticator')
     mes = data.get('month') 
     ano = data.get('year') 
@@ -108,10 +102,33 @@ def teste():
     try:
         connection = pymysql.connect(**db_config)  
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-            cursor.execute("SELECT * FROM ponto WHERE data_hora >= %s AND data_hora < %s",begin,end)
+            cursor.execute("SELECT * FROM ponto WHERE data_hora >= %s AND data_hora < %s",(begin,end))
             result = cursor.fetchall()
     except Exception as e:
             return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
     return jsonify(result)
 
+
+
+
 app.run(host='0.0.0.0', debug=True)
+
+
+
+
+
+
+
+
+
+
+# @app.route("/get_pontos", methods=['POST'])
+# def get_pontos():
+#     data = request.json
+#     token_auth = data.get('Authenticator')
+#     dados_usuario = auth_decode(token_auth)
+#     connection = pymysql.connect(**db_config)
+#     with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+#         cursor.execute("SELECT * FROM ponto WHERE validado=0;")
+#         result = cursor.fetchall()
+#         return jsonify(result)
