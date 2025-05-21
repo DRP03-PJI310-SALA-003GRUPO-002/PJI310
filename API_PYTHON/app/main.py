@@ -21,7 +21,7 @@ db_config = {
 }
 timezone_sp = pytz.timezone('America/Sao_Paulo')
 
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost"}})
 
 # Rota de login
 @app.route('/login', methods=['POST'])
@@ -115,7 +115,7 @@ def validar_ponto():
         return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
     return {"success":"Ponto inserido com sucesso"}
 
-@app.route("/get_pontos_by_month", methods=['GET'])
+@app.route("/get_pontos_by_month", methods=['POST'])
 def get_pontos_by_month():
     data = request.json
     token_auth = data.get('token')

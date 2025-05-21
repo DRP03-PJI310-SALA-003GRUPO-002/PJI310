@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consulta de Ponto</title>
+  <link rel="stylesheet" href="css/ponto.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-image">
+      <div id="map" class="map"></div>
+    </div>
+
+    <div class="form">
+      <div class="form-header">
+        <h1>Consultar Pontos por Mês</h1>
+      </div>
+
+      <div class="input-group">
+        <div class="input-box">
+          <label for="month">Mês:</label>
+          <input type="number" id="month" name="month" min="1" max="12" required />
+        </div>
+
+        <div class="input-box">
+          <label for="year">Ano:</label>
+          <input type="number" id="year" name="year" required />
+        </div>
+
+        <div class="input-box">
+          <label for="token" style="display: none;">Token de Autenticação:</label>
+          <input type="hidden" id="token" name="token" />
+        </div>
+
+        <div class="continue-button">
+          <button type="button" id="consultarBtn">Consultar</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-box" style="width: 100%;">
+          <table id="resultado" border="1" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>CPF</th>
+                <th>Usuário</th>
+                <th>Validado</th>
+                <th>Data/Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Resultados inseridos dinamicamente aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/consulta_ponto.js"></script>
+</body>
+</html>
