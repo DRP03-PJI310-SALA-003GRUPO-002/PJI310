@@ -8,4 +8,4 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/
 
 # Copia os arquivos HTML para o diretório público do Nginx
-COPY ./site/ /usr/share/nginx/html/
+COPY ./site/ /usr/share/nginx/html/site

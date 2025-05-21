@@ -3,6 +3,9 @@ from flask import Flask, request, jsonify, make_response
 from Auth.auth import auth_encode, auth_decode
 from Functions.intervalo import obter_intervalo
 import pymysql
+import pytz
+
+from dateutil import parser
 
 from flask_cors import CORS
 
@@ -16,6 +19,7 @@ db_config = {
     "password": "pI123",
     "database": "db_PI"
 }
+timezone_sp = pytz.timezone('America/Sao_Paulo')
 
 CORS(app, supports_credentials=True)
 
@@ -50,20 +54,32 @@ def insert_ponto():
     try:
         data = request.json
         timestamp_app = data.get('timestamp')
-        token_auth = data.get('Authenticator')
+        token_auth = data.get('token')
         dados_usuarios = auth_decode(token_auth)
+
+        # Converte o timestamp ISO 8601 para datetime e formata
+        dt_obj = parser.isoparse(timestamp_app).astimezone(timezone_sp)  # converte para timezone correto
+        formatted_timestamp = dt_obj.strftime('%Y-%m-%d %H:%M:%S')       # formato compatível com MySQL
+
         connection = pymysql.connect(**db_config)
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-            cursor.execute("INSERT INTO ponto (cpf, usuario, data_hora) VALUES (%s,%s,%s)", (dados_usuarios['cpf'],dados_usuarios['usuario'],timestamp_app))
+            cursor.execute(
+                "INSERT INTO ponto (cpf, usuario, data_hora) VALUES (%s, %s, %s)",
+                (dados_usuarios['cpf'], dados_usuarios['usuario'], formatted_timestamp)
+            )
             connection.commit()
-            return jsonify({"message":{"cpf": dados_usuarios['cpf'],"usuario":dados_usuarios['usuario'],"timestamp":timestamp_app}})
+            return jsonify({"message": {
+                "cpf": dados_usuarios['cpf'],
+                "usuario": dados_usuarios['usuario'],
+                "timestamp": formatted_timestamp
+            }})
     except Exception as e:
         return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
 
 @app.route("/get_user_ponto", methods=['POST'])
 def get_ponto():
     data = request.json
-    token_auth = data.get('Authenticator')
+    token_auth = data.get('token')
     dados_usuario = auth_decode(token_auth)
     
     mes = data.get('month') 
@@ -75,11 +91,19 @@ def get_ponto():
         cursor.execute("SELECT * FROM ponto WHERE usuario=%s AND data_hora >= %s AND data_hora < %s;",(dados_usuario["usuario"],begin,end))
         result = cursor.fetchall()
         return jsonify(result)
+
+@app.route("/get_user", methods=['POST'])
+def get_user_info():
+    data =request.json
+    token_auth = data.get('token')
+    dados_usuario = auth_decode(token_auth)
+    return jsonify(dados_usuario), 200
+
     
 @app.route("/set_ponto", methods=['POST'])
 def validar_ponto():
     data=request.json
-    token_auth = data.get("Authenticator")
+    token_auth = data.get("token")
     id_ponto = data.get("id")
     dados_usuario = auth_decode(token_auth)
     try:
@@ -91,10 +115,10 @@ def validar_ponto():
         return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
     return {"success":"Ponto inserido com sucesso"}
 
-@app.route("/get_pontos_by_month", methods=['POST'])
+@app.route("/get_pontos_by_month", methods=['GET'])
 def get_pontos_by_month():
     data = request.json
-    token_auth = data.get('Authenticator')
+    token_auth = data.get('token')
     mes = data.get('month') 
     ano = data.get('year') 
     begin,end = obter_intervalo(mes, ano)
@@ -125,7 +149,7 @@ app.run(host='0.0.0.0', debug=True)
 # @app.route("/get_pontos", methods=['POST'])
 # def get_pontos():
 #     data = request.json
-#     token_auth = data.get('Authenticator')
+#     token_auth = data.get('token')
 #     dados_usuario = auth_decode(token_auth)
 #     connection = pymysql.connect(**db_config)
 #     with connection.cursor(pymysql.cursors.DictCursor) as cursor:
