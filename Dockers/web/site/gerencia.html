@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Pontos</title>
+    <link rel="stylesheet" href="css/gerencia.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Consulta de Pontos</h1>
+        <div class="form-group">
+            <label for="month">Mês:</label>
+            <input type="number" id="month" min="1" max="12" placeholder="Ex: 5">
+        </div>
+        <div class="form-group">
+            <label for="year">Ano:</label>
+            <input type="number" id="year" min="2000" max="2100" placeholder="Ex: 2025">
+        </div>
+        <button id="consultarBtn">Consultar</button>
+        <button id="validarBtn">Validar ponto</button>
+
+        <table id="resultado">
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>ID</th>
+                    <th>CPF</th>
+                    <th>Usuário</th>
+                    <!-- <th class="hidden">Validado</th> -->
+                    <th>Data/Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Resultados inseridos via JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/consulta_ponto.js"></script>
+</body>
+</html>

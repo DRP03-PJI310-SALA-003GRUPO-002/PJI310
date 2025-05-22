@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ponto</title>
+</head>
+<body>
+  <h1>Página de Ponto</h1>
+  <div id="dados"></div>
+
+  <script>
+    async function carregarDados() {
+      const response = await fetch("http://localhost:5000/dados", {
+        credentials: "include", // envia cookies para autenticação
+      });
+
+      if (response.ok) {
+        const dados = await response.json();
+        document.getElementById("dados").textContent = dados.mensagem;
+      } else {
+        window.location.href = "index.html"; // se não autorizado, volta pro login
+      }
+    }
+
+    carregarDados();
+  </script>
+</body>
+</html>

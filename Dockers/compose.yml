@@ -1,0 +1,29 @@
+services:
+  db:
+    build:
+      context: ./mariadb/
+      dockerfile: Dockerfile
+    container_name: mariadb_container
+    ports:
+      - "3306:3306"
+    networks:
+      - pi_network
+    environment:
+      MARIADB_ROOT_PASSWORD: p@55w.rd
+      MARIADB_DATABASE: db_PI
+      MARIADB_USER: pIuser
+      MARIADB_PASSWORD: pI123
+
+  web:
+    build:
+      context: ./web/
+      dockerfile: Dockerfile 
+    container_name: web-teste
+    ports:
+      - "80:80"
+    networks:
+      - pi_network
+      
+networks:
+  pi_network:
+    driver: bridge

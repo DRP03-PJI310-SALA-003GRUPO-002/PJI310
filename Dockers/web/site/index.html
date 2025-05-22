@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+
+<body id="main" >
+        <div class="container">
+            <!-- Seção de Login do Colaborador -->
+            <section class="content first-content">
+                <div class="column first-column">
+                    <h2 class="title-primary">Login - Gerente</h2>
+                    <p class="description-primary">Acesso restrito</p>
+                    <p class="description-primary">Gerenciamento das horas</p>
+                    <button id="btn1" class="button button-primary">Acessar</button>
+                </div><!-- Fim da Primeira Coluna -->
+                <div class="column second-column">
+                    <h2 class="title-second">Login - Colaborador</h2>
+                    <div class="link-midia">
+                        <ul class="list-midia">
+                            <!-- <li><img class="midia" src="/imag/facebook.png" alt="Facebook"/></li>
+                            <li><img class="midia" src="/imag/google.png" alt="Google"/></li>
+                            <li><img class="midia" src="/imag/linkedin.png" alt="LinkedIn"/></li> -->
+                        </ul>
+                    </div>
+                    <p class="description-second">Dados</p>
+                    <form class="form" method="get" action="" id="form">
+                        <label class="label-input">
+                            <input id="cpf" type="text" placeholder="Usuário" aria-label="Usuário">
+                        </label>
+                        <label class="label-input">
+                            <input id="senha" type="password" placeholder="Senha" aria-label="Senha">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </label>
+                        <button id="login" type="submit" onclick="logar(); return false" class="button button-second">Login</button>
+                    </form>
+                </div><!-- Fim da Segunda Coluna -->
+            </section><!-- Fim da Seção de Login do Colaborador -->
+
+            <!-- Seção de Login do Gerente -->
+            <section class="content second-content">
+                <div class="column first-column">
+                    <h2 class="title-primary">Login - Colaborador</h2>
+                    <p class="description-primary">Controle de horas</p>
+                    <p class="description-primary">Acesso para o registro das horas</p>
+                    <button   id="btn2"  class="button button-primary">Acessar</button>
+                </div><!-- Fim da Primeira Coluna -->
+                <div class="column second-column">
+                    <h2 class="title-second">Login - Gerente</h2>
+                    <div class="link-midia">
+                        <ul class="list-midia">
+                            <!-- <li><img class="midia" src="/imag/facebook.png" alt="Facebook"/></li>
+                            <li><img class="midia" src="/imag/google.png" alt="Google"/></li>
+                            <li><img class="midia" src="/imag/linkedin.png" alt="LinkedIn"/></li> -->
+                        </ul>
+                    </div>
+                    <p class="description-second">Dados</p>
+                    <form class="form" method="get" action="" id="form">
+                        <label class="label-input">
+                            <input id="cpfge" type="text" placeholder="Usuário" aria-label="Usuário">
+                        </label>
+                        <label class="label-input">
+                            <input id="senhage" type="password" placeholder="Senha" aria-label="Senha">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </label>
+                        <button id="loginge" type="submit" onclick="logarge(); return false" class="button button-second">Login</button>
+                    </form>
+                </div><!-- Fim da Segunda Coluna -->
+            </section><!-- Fim da Seção de Login do Gerente -->
+        </div>
+    <script src="/js/login.js"></script>
+</body>
+</html>
