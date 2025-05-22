@@ -1,0 +1,8 @@
+POST http://localhost:5000/inserir_ponto
+Content-Type: application/json
+Cookie: auth_token=ImpvYW8i.aBgZrA.YFquojE5-vDBiF0UjMEnYhUdSmQ
+
+{
+  "timestamp": "2025-05-17 11:45:00",
+  "Authenticator":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiam9hbyIsImNwZiI6IjEyMzQ1Njc4OTAxIiwiY2FyZ28iOiJ0aSIsImV4cCI6MTc0NzQ5NDE5Mn0.7WKJYCxKtU6FvH3g7VLkZM2xPJVP_9HrSxd9-itJ1Kg"
+}

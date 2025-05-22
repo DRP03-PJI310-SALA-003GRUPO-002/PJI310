@@ -1,0 +1,6 @@
+POST http://localhost:5000/get_pontos
+Content-Type: application/json
+
+{
+    "Authenticator":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiam9hbyIsImNwZiI6IjEyMzQ1Njc4OTAxIiwiY2FyZ28iOiJ0aSIsImV4cCI6MTc0NzE5MzM0MX0.Eph1DDIGB8Dlvk9xxqu7QI4ILy2vAU-CxDPxKCjxUxE"
+}
