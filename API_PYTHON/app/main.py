@@ -119,14 +119,14 @@ def validar_ponto():
 def get_pontos_by_month():
     data = request.json
     token_auth = data.get('token')
-    mes = data.get('month') 
-    ano = data.get('year') 
+    mes = int(data.get('month'))
+    ano = int(data.get('year')) 
     begin,end = obter_intervalo(mes, ano)
     dados_usuario = auth_decode(token_auth)
     try:
         connection = pymysql.connect(**db_config)  
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
-            cursor.execute("SELECT * FROM ponto WHERE data_hora >= %s AND data_hora < %s",(begin,end))
+            cursor.execute("SELECT * FROM ponto WHERE data_hora >= %s AND data_hora < %s AND validado = FALSE",(begin,end))
             result = cursor.fetchall()
     except Exception as e:
             return jsonify({"erro": f"Erro no servidor: {str(e)}"}), 500
